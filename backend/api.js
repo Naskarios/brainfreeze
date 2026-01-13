@@ -50,19 +50,20 @@ app.get("/api/view-all", (requset, response) => {
 
 // view a single row
 app.get("/api/view-single/:nodeID", (request, response) => {
-  const selectedNodeID = request.params;
+  const selectedNodeID = request.params.nodeID;
   console.log("selected NODE ------", selectedNodeID);
-  db.all(
-    "SELECT * FROM temperature where nodeID=(?)",
+  console.log("selected NODE ------", typeof selectedNodeID);
+  db.get(
+    "SELECT * FROM temperature where nodeID=? ",
     [selectedNodeID],
-    (err, rows) => {
+    (err, row) => {
       if (err) {
         console.error("Error fetching data:", err);
         response.status(500).send("Error");
       } else {
-        console.log("All temperature data requested");
-        //   console.table(rows);
-        response.status(200).send(rows);
+        console.log("Row for node requested");
+        console.log(row);
+        response.status(200).send(row);
       }
     }
   );
