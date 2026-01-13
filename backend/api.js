@@ -49,6 +49,8 @@ app.get("/api/view-all", (requset, response) => {
 });
 
 app.post("/api/new-reading", (request, response) => {
+ const { sensorID, nodeID, temperature } = request.body;
+
   // Insert temperature data into the database
   console.log("Headers:", request.headers);
   console.log("Body:", request.body);
@@ -56,18 +58,18 @@ app.post("/api/new-reading", (request, response) => {
   INSERT INTO temperature (sensorID, nodeID, temperature)
   VALUES ( ?, ?, ?)`; // the  ? are placeholders
 
-  //   db.run(insertSql, [sensorID, nodeID, temperature], function (err) {
-  //     if (err) {
-  //       console.error("Error inserting temperature:", err);
-  //       response.status(500).send("Error");
-  //     } else {
-  //       console.log("sensorID:", sensorID);
-  //       console.log("nodeID:", nodeID);
-  //       console.log("temperature:", temperature);
-  //       console.log("Temperature inserted successfully. Row ID:", this.lastID);
+     db.run(insertSql, [sensorID, nodeID, temperature], function (err) {
+       if (err) {
+         console.error("Error inserting temperature:", err);
+         response.status(500).send("Error");
+       } else {
+         console.log("sensorID:", sensorID);
+         console.log("nodeID:", nodeID);
+         console.log("temperature:", temperature);
+         console.log("Temperature inserted successfully. Row ID:", this.lastID);
   response.status(201).send("Inserted new row\n");
-  //     }
-  //   });
+       }
+     });
 });
 
 app.listen(PORT, () => {

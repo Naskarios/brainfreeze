@@ -15,7 +15,7 @@ function TemperaturesList({ setRenderList }: TemperatureProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:3000/api/view-all", {
+      const response = await fetch("http://192.168.1.115:3000/api/view-all", {
         method: "GET",
       });
       const fetchedData = await response.json();
@@ -28,9 +28,9 @@ function TemperaturesList({ setRenderList }: TemperatureProps) {
   const arrayComponent = data.map((a) => {
     return (
       <tr className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-        <td className="px-6 py-4 text-sm text-gray-900">{a.id}</td>
-        <td className="px-6 py-4 text-sm text-gray-900">{a.sensorID}</td>
-        <td className="px-6 py-4 text-sm text-gray-600">{a.nodeID}</td>
+        <td className="px-6 py-4 text-sm text-gray-900">{a.nodeID}</td>
+        <td className="px-6 py-4 text-sm text-gray-900">{a.temperature}</td>
+        <td className="px-6 py-4 text-sm text-gray-600">{a.timestamp}</td>
       </tr>
     );
   });

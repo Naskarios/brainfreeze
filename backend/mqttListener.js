@@ -37,15 +37,15 @@ function mqttListener() {
   mqttClient.on("message", (topic, message) => {
     // Parse message and extract data
     console.log(`Message received on topic ${topic}: ${message}`);
-    const [sensorID] = message.toString().split(",");
-    const [nodeID] = message.toString().split(",");
-    const [temperature] = message.toString().split(",");
-
+//    const [sensorID] = message.toString().split(",");
+  //  const [nodeID] = message.toString().split(",");
+    //const [temperature] = message.toString().split(",");
+const doc=	 JSON.parse(message)
     // Log the extracted values
-    console.log("sensorID:", sensorID);
-    console.log("nodeID:", nodeID);
-    console.log("temperature:", temperature);
-    apiCall(sensorID, nodeID, temperature);
+    console.log("sensorID:", doc.sensorID);
+    console.log("nodeID:", doc.nodeID);
+    console.log("temperature:", doc.t);
+    apiCall(doc.sensorID, doc.nodeID, doc.t);
   });
 }
 mqttListener();
