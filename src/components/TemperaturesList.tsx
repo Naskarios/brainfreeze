@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ApiContext } from "../contexts/ApiContext";
+import type { TemperatureData } from "../types/fridge";
 
 interface TemperatureProps {
   setRenderList: (check: boolean) => void;
 }
 
-interface TemperatureData {
-  id: number;
-  sensorID: string;
-  nodeID: string;
-}
-
 function TemperaturesList({ setRenderList }: TemperatureProps) {
   const [data, setData] = useState<TemperatureData[]>([]);
+  const api = useContext(ApiContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://192.168.1.115:3000/api/view-all", {
+      const url = api + "/api/view-all";
+      console.log(url);
+      const response = await fetch(url, {
         method: "GET",
       });
       const fetchedData = await response.json();
@@ -23,7 +22,7 @@ function TemperaturesList({ setRenderList }: TemperatureProps) {
       setData(fetchedData);
     };
     fetchData();
-  }, []);
+  }, [api]);
 
   const arrayComponent = data.map((a) => {
     return (

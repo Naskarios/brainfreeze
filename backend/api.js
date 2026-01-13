@@ -34,8 +34,8 @@ db.run(createTableSql, (err) => {
   }
 });
 
+// view all rows
 app.get("/api/view-all", (requset, response) => {
-  // view all rows
   db.all("SELECT * FROM temperature", (err, rows) => {
     if (err) {
       console.error("Error fetching data:", err);
@@ -48,8 +48,29 @@ app.get("/api/view-all", (requset, response) => {
   });
 });
 
+// view a single row
+app.get("/api/view-single/:nodeID", (request, response) => {
+  const selectedNodeID = request.params;
+  console.log("selected NODE ------", selectedNodeID);
+  db.all(
+    "SELECT * FROM temperature where nodeID=(?)",
+    [selectedNodeID],
+    (err, rows) => {
+      if (err) {
+        console.error("Error fetching data:", err);
+        response.status(500).send("Error");
+      } else {
+        console.log("All temperature data requested");
+        //   console.table(rows);
+        response.status(200).send(rows);
+      }
+    }
+  );
+});
+
+// insert a new row
 app.post("/api/new-reading", (request, response) => {
- const { sensorID, nodeID, temperature } = request.body;
+  const { sensorID, nodeID, temperature } = request.body;
 
   // Insert temperature data into the database
   console.log("Headers:", request.headers);
@@ -58,18 +79,18 @@ app.post("/api/new-reading", (request, response) => {
   INSERT INTO temperature (sensorID, nodeID, temperature)
   VALUES ( ?, ?, ?)`; // the  ? are placeholders
 
-     db.run(insertSql, [sensorID, nodeID, temperature], function (err) {
-       if (err) {
-         console.error("Error inserting temperature:", err);
-         response.status(500).send("Error");
-       } else {
-         console.log("sensorID:", sensorID);
-         console.log("nodeID:", nodeID);
-         console.log("temperature:", temperature);
-         console.log("Temperature inserted successfully. Row ID:", this.lastID);
-  response.status(201).send("Inserted new row\n");
-       }
-     });
+  db.run(insertSql, [sensorID, nodeID, temperature], function (err) {
+    if (err) {
+      console.error("Error inserting temperature:", err);
+      response.status(500).send("Error");
+    } else {
+      console.log("sensorID:", sensorID);
+      console.log("nodeID:", nodeID);
+      console.log("temperature:", temperature);
+      console.log("Temperature inserted successfully. Row ID:", this.lastID);
+      response.status(201).send("Inserted new row\n");
+    }
+  });
 });
 
 app.listen(PORT, () => {

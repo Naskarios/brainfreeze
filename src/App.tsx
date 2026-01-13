@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Temperatures from "./components/TemperaturesList";
 import TemperaturesTable from "./components/TemperaturesTable";
+import { ApiContext } from "./contexts/ApiContext";
 
 function App() {
   const [renderList, setRenderList] = useState(true);
@@ -11,6 +12,7 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-teal-300">
       {/* serve -s build */}
+      {/* HEADER */}
       <Header></Header>
       <div className="flex">
         <button
@@ -20,7 +22,7 @@ function App() {
           className="mx-auto my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
         >
           View List
-        </button>{" "}
+        </button>
         <button
           onClick={() => {
             setRenderTable(!renderTable);
@@ -30,13 +32,18 @@ function App() {
           View Table
         </button>
       </div>
-
-      {renderTable && (
-        <TemperaturesTable setRenderTable={setRenderTable}></TemperaturesTable>
-      )}
-      {renderList && (
-        <Temperatures setRenderList={setRenderList}></Temperatures>
-      )}
+      {/* Data components */}
+      <ApiContext.Provider value="http://localhost:3000">
+        {renderTable && (
+          <TemperaturesTable
+            setRenderTable={setRenderTable}
+          ></TemperaturesTable>
+        )}
+        {renderList && (
+          <Temperatures setRenderList={setRenderList}></Temperatures>
+        )}
+      </ApiContext.Provider>
+      {/* Footer */}
       <Footer></Footer>
     </div>
   );
