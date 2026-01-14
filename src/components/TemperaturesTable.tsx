@@ -57,6 +57,7 @@ function TemperaturesTable({ setRenderTable }: TemperaturesTableProps) {
             <tbody>
               {data
                 .filter((item) => item !== null)
+                .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
                 .map((item, index) => (
                   <tr
                     key={index}
