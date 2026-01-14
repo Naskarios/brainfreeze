@@ -8,8 +8,8 @@ import SingleTemperature from "./components/SingleTemperature";
 import { ApiContext } from "./contexts/ApiContext";
 
 function App() {
-  const [renderList, setRenderList] = useState(true);
-  const [renderTable, setRenderTable] = useState(false);
+  const [renderList, setRenderList] = useState(false);
+  const [renderTable, setRenderTable] = useState(true);
   const [renderSingle, setRenderSingle] = useState(false);
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-teal-300">
@@ -43,7 +43,7 @@ function App() {
          </button>
        </div>
        {/* Data components */}
-       <ApiContext.Provider value="http://localhost:3000">
+       <ApiContext.Provider value="http://192.168.1.115:3000">
          {renderTable && (
            <TemperaturesTable
              setRenderTable={setRenderTable}
