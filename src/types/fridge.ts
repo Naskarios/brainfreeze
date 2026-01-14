@@ -1,5 +1,7 @@
 export interface TemperatureData {
-  temperature: string;
+  id?: number;
+  sensorID?: string;
+  temperature: string | number;
   timestamp: string;
   nodeID: string;
 }

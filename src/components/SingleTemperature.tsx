@@ -4,11 +4,11 @@ import { ApiContext } from "../contexts/ApiContext";
 
 export default function SingleTemperature() {
   const [data, setData] = useState<TemperatureData>();
-  const [selectedNode, setSelectedNode] = useState<string>("1");
+  const [selectedSensor, setSelectedSensor] = useState<string>("1");
   const api = useContext(ApiContext);
   useEffect(() => {
-    const fetchData = async (selectedNode: string) => {
-      const url = api + "/api/view-single/" + selectedNode;
+    const fetchData = async (selectedSensor: string) => {
+      const url = api + "/api/view-single/" + selectedSensor;
       const response = await fetch(url, {
         method: "GET",
       });
@@ -16,18 +16,20 @@ export default function SingleTemperature() {
       console.log(fetchedData);
       setData(fetchedData);
     };
-    fetchData(selectedNode);
-  }, [api, selectedNode]);
+    fetchData(selectedSensor);
+  }, [api, selectedSensor]);
 
   return (
     <div className="flex flex-col items-center gap-4 my-6">
-      <label className="text-white text-lg font-semibold">What node sir?</label>
+      <label className="text-white text-lg font-semibold">
+        What fridge sir?
+      </label>
       <input
         type="number"
         onChange={(e) => {
-          setSelectedNode(e.target.value);
+          setSelectedSensor(e.target.value);
         }}
-        placeholder="Enter node number"
+        placeholder="Enter Sensor number"
         className="px-4 py-2 rounded-lg border-2 bg-white border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-colors duration-200"
       />
       {data ? (
@@ -35,10 +37,10 @@ export default function SingleTemperature() {
           <div className="space-y-6">
             <div className="border-b pb-4">
               <p className="text-gray-600 text-sm font-semibold uppercase tracking-wide">
-                Node ID
+                Sensor ID
               </p>
               <p className="text-2xl font-bold text-gray-900 mt-1">
-                {data.nodeID}
+                {data.sensorID}
               </p>
             </div>
 

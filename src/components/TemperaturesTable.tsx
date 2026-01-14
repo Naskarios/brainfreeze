@@ -7,13 +7,16 @@ interface TemperaturesTableProps {
 }
 
 function TemperaturesTable({ setRenderTable }: TemperaturesTableProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [data, setData] = useState<TemperatureData>();
+  const [data, setData] = useState<TemperatureData[] | null>(null);
   const api = useContext(ApiContext);
 
   useEffect(() => {
+    const sensors = [
+      1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+      23,
+    ];
     const fetchData = async () => {
-      const url = api + "/api/view-single/1";
+      const url = api + `/api/view-array?sensorIDs=${sensors.join(",")}`;
       const response = await fetch(url, {
         method: "GET",
       });
@@ -36,6 +39,50 @@ function TemperaturesTable({ setRenderTable }: TemperaturesTableProps) {
           X
         </button>
       </div>
+
+      {data ? (
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden">
+            <thead>
+              <tr className="bg-blue-600 text-white">
+                <th className="px-6 py-3 text-left font-semibold">Sensor ID</th>
+                <th className="px-6 py-3 text-left font-semibold">
+                  Temperature (°C)
+                </th>
+                <th className="px-6 py-3 text-left font-semibold">
+                  Last Updated
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {data
+                .filter((item) => item !== null)
+                .map((item, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-gray-200 hover:bg-blue-50 transition-colors duration-150"
+                  >
+                    <td className="px-6 py-4 text-gray-700">
+                      {item?.sensorID}
+                    </td>
+                    <td className="px-6 py-4 text-blue-600 font-semibold">
+                      {item?.temperature}°C
+                    </td>
+                    <td className="px-6 py-4 text-gray-600">
+                      {item?.timestamp
+                        ? new Date(item.timestamp).toLocaleString()
+                        : "N/A"}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="bg-gray-100 rounded-lg p-8 text-center">
+          <p className="text-gray-500">Loading temperature data...</p>
+        </div>
+      )}
     </div>
   );
 }

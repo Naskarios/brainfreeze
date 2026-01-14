@@ -49,24 +49,50 @@ app.get("/api/view-all", (requset, response) => {
 });
 
 // view a single row
-app.get("/api/view-single/:nodeID", (request, response) => {
-  const selectedNodeID = request.params.nodeID;
-  console.log("selected NODE ------", selectedNodeID);
-  console.log("selected NODE ------", typeof selectedNodeID);
+//view an ARRAY OF CHOICES
+app.get("/api/view-single/:sensorID", (request, response) => {
+  const selectedSensorID = request.params.sensorID;
+  console.log("selected sensor ------", selectedSensorID);
+  console.log("selected sensor ------", typeof selectedSensorID);
   db.get(
-    "SELECT * FROM temperature where nodeID=? ",
-    [selectedNodeID],
+    "SELECT * FROM temperature where sensorID=? ",
+    [selectedSensorID],
     (err, row) => {
       if (err) {
         console.error("Error fetching data:", err);
         response.status(500).send("Error");
       } else {
-        console.log("Row for node requested");
+        console.log("Row for sensor requested");
         console.log(row);
         response.status(200).send(row);
       }
     }
   );
+});
+
+app.get("/api/view-array", (request, response) => {
+  const sensorIds = request.query.sensorIDs.split(",").map(Number);
+  const results = [];
+  let completed = 0;
+
+  sensorIds.forEach((sensorId) => {
+    db.get(
+      "SELECT * FROM temperature WHERE sensorID = ? LIMIT 1",
+      [sensorId],
+      (err, row) => {
+        if (err) {
+          response.status(500).json({ error: err.message });
+          return;
+        }
+        results.push(row);
+        completed++;
+        // When all queries finish, send the results
+        if (completed === sensorIds.length) {
+          response.json(results);
+        }
+      }
+    );
+  });
 });
 
 // insert a new row
@@ -77,16 +103,16 @@ app.post("/api/new-reading", (request, response) => {
   console.log("Headers:", request.headers);
   console.log("Body:", request.body);
   const insertSql = `
-  INSERT INTO temperature (sensorID, nodeID, temperature)
+  INSERT INTO temperature (sensorID, sensorID, temperature)
   VALUES ( ?, ?, ?)`; // the  ? are placeholders
 
-  db.run(insertSql, [sensorID, nodeID, temperature], function (err) {
+  db.run(insertSql, [sensorID, sensorID, temperature], function (err) {
     if (err) {
       console.error("Error inserting temperature:", err);
       response.status(500).send("Error");
     } else {
       console.log("sensorID:", sensorID);
-      console.log("nodeID:", nodeID);
+      console.log("sensorID:", sensorID);
       console.log("temperature:", temperature);
       console.log("Temperature inserted successfully. Row ID:", this.lastID);
       response.status(201).send("Inserted new row\n");
