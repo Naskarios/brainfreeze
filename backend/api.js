@@ -103,10 +103,10 @@ app.post("/api/new-reading", (request, response) => {
   console.log("Headers:", request.headers);
   console.log("Body:", request.body);
   const insertSql = `
-  INSERT INTO temperature (sensorID, sensorID, temperature)
+  INSERT INTO temperature (sensorID, nodeID, temperature)
   VALUES ( ?, ?, ?)`; // the  ? are placeholders
 
-  db.run(insertSql, [sensorID, sensorID, temperature], function (err) {
+  db.run(insertSql, [sensorID, nodeID, temperature], function (err) {
     if (err) {
       console.error("Error inserting temperature:", err);
       response.status(500).send("Error");

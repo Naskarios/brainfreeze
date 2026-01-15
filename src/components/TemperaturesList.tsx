@@ -36,7 +36,7 @@ function TemperaturesList({ setRenderList }: TemperatureProps) {
   return (
     <div className="p-6">
       <div className="text-2xl font-bold text-white mb-6">
-        Temperatures
+        Temperature History
         <button
           onClick={() => {
             setRenderList(false);

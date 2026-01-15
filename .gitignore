@@ -25,3 +25,4 @@ backend/database.db
 *.njsproj
 *.sln
 *.sw?
+backend/database.db
