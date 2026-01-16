@@ -26,3 +26,5 @@ backend/database.db
 *.sln
 *.sw?
 backend/database.db
+package-lock.json
+backend/database.db

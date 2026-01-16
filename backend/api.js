@@ -36,7 +36,7 @@ db.run(createTableSql, (err) => {
 
 // view all rows
 app.get("/api/view-all", (requset, response) => {
-  db.all("SELECT * FROM temperature", (err, rows) => {
+  db.all("SELECT * FROM temperature ORDER BY timestamp DESC", (err, rows) => {
     if (err) {
       console.error("Error fetching data:", err);
       response.status(500).send("Error");
@@ -55,7 +55,7 @@ app.get("/api/view-single/:sensorID", (request, response) => {
   console.log("selected sensor ------", selectedSensorID);
   console.log("selected sensor ------", typeof selectedSensorID);
   db.get(
-    "SELECT * FROM temperature where sensorID=? ",
+    "SELECT * FROM temperature where sensorID=? ORDER BY timestamp DESC",
     [selectedSensorID],
     (err, row) => {
       if (err) {
@@ -77,7 +77,7 @@ app.get("/api/view-array", (request, response) => {
 
   sensorIds.forEach((sensorId) => {
     db.get(
-      "SELECT * FROM temperature WHERE sensorID = ? LIMIT 1",
+      "SELECT * FROM temperature WHERE sensorID = ? ORDER BY timestamp DESC LIMIT 1 ",
       [sensorId],
       (err, row) => {
         if (err) {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { TemperatureData } from "../types/fridge";
 import { ApiContext } from "../contexts/ApiContext";
 
