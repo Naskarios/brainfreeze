@@ -3,11 +3,7 @@ import { ApiContext } from "../contexts/ApiContext";
 import type { TemperatureData } from "../types/fridge";
 import TemperatureTableRow from "./TemperatureTableRow";
 
-interface TemperaturesTableProps {
-  setRenderTable: (check: boolean) => void;
-}
-
-function TemperaturesTable({ setRenderTable }: TemperaturesTableProps) {
+function TemperaturesTable() {
   const [data, setData] = useState<TemperatureData[] | null>(null);
   const api = useContext(ApiContext);
   const lowTemp = ["15", "16", "13", "10"];
@@ -55,14 +51,6 @@ function TemperaturesTable({ setRenderTable }: TemperaturesTableProps) {
     <div className="p-6">
       <div className="text-2xl font-bold text-white mb-6">
         Temperature Details
-        <button
-          onClick={() => {
-            setRenderTable(false);
-          }}
-          className="ml-4 px-1 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors duration-200 shadow-md"
-        >
-          X
-        </button>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden">

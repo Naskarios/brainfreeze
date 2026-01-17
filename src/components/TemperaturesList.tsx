@@ -2,11 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "../contexts/ApiContext";
 import type { TemperatureData } from "../types/fridge";
 
-interface TemperatureProps {
-  setRenderList: (check: boolean) => void;
-}
-
-function TemperaturesList({ setRenderList }: TemperatureProps) {
+function TemperaturesList() {
   const [data, setData] = useState<TemperatureData[]>([]);
   const api = useContext(ApiContext);
 
@@ -37,14 +33,6 @@ function TemperaturesList({ setRenderList }: TemperatureProps) {
     <div className="p-6">
       <div className="text-2xl font-bold text-white mb-6">
         Temperature History
-        <button
-          onClick={() => {
-            setRenderList(false);
-          }}
-          className="ml-4 px-1  bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors duration-200 shadow-md "
-        >
-          X
-        </button>
       </div>
       <div className="overflow-x-auto shadow-md rounded-lg">
         <table className="w-full border-collapse bg-white">

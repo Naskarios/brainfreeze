@@ -6,11 +6,18 @@ import Temperatures from "./components/TemperaturesList";
 import TemperaturesTable from "./components/TemperaturesTable";
 import SingleTemperature from "./components/SingleTemperature";
 import { ApiContext } from "./contexts/ApiContext";
+import QuickTable from "./components/QuickTable";
 
+enum Render {
+  QUICK = "QUICK",
+  LIST = "LIST",
+  SINGLE = "SINGLE",
+  HISTORY = "HISTORY",
+  TABLE = "TABLE",
+}
 function App() {
-  const [renderList, setRenderList] = useState(false);
-  const [renderTable, setRenderTable] = useState(true);
-  const [renderSingle, setRenderSingle] = useState(false);
+  const [renderSelected, setRender] = useState<Render>(Render.QUICK);
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-teal-300">
       {/* serve -s build */}
@@ -19,15 +26,15 @@ function App() {
       <div className="flex">
         <button
           onClick={() => {
-            setRenderList(!renderList);
+            setRender(Render.QUICK);
           }}
           className="mx-auto my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
         >
-          History
+          Quick Info
         </button>
         <button
           onClick={() => {
-            setRenderTable(!renderTable);
+            setRender(Render.TABLE);
           }}
           className="mx-auto my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
         >
@@ -35,24 +42,33 @@ function App() {
         </button>
         <button
           onClick={() => {
-            setRenderSingle(!renderSingle);
+            setRender(Render.SINGLE);
           }}
           className="mx-auto my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
         >
           Single Temperature
         </button>
+
+        <button
+          onClick={() => {
+            setRender(Render.HISTORY);
+          }}
+          className="mx-auto my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
+        >
+          History
+        </button>
       </div>
       {/* Data components */}
       <ApiContext.Provider value="http://localhost:3000">
-        {renderTable && (
-          <TemperaturesTable
-            setRenderTable={setRenderTable}
-          ></TemperaturesTable>
+        {renderSelected == Render.TABLE && (
+          <TemperaturesTable></TemperaturesTable>
         )}
-        {renderList && (
-          <Temperatures setRenderList={setRenderList}></Temperatures>
+        {renderSelected == Render.HISTORY && <Temperatures></Temperatures>}
+        {renderSelected == Render.SINGLE && (
+          <SingleTemperature></SingleTemperature>
         )}
-        {renderSingle && <SingleTemperature></SingleTemperature>}
+
+        {renderSelected == Render.QUICK && <QuickTable></QuickTable>}
       </ApiContext.Provider>
       {/* Footer */}
       <Footer></Footer>
