@@ -8,13 +8,15 @@ import SingleTemperature from "./components/SingleTemperature";
 import { ApiContext } from "./contexts/ApiContext";
 import QuickTable from "./components/QuickTable";
 
-enum Render {
-  QUICK = "QUICK",
-  LIST = "LIST",
-  SINGLE = "SINGLE",
-  HISTORY = "HISTORY",
-  TABLE = "TABLE",
-}
+const Render = {
+  QUICK: "QUICK",
+  LIST: "LIST",
+  SINGLE: "SINGLE",
+  HISTORY: "HISTORY",
+  TABLE: "TABLE",
+} as const;
+
+type Render = (typeof Render)[keyof typeof Render];
 function App() {
   const [renderSelected, setRender] = useState<Render>(Render.QUICK);
 
