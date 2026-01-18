@@ -1,15 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "../contexts/ApiContext";
 import type { TemperatureData } from "../types/fridge";
-import { differenceInDays, differenceInHours } from "date-fns";
+import { checkOffline, checkTypeAndTemp } from "../helpers/helpers";
 
 export default function QuickTable() {
   const [data, setData] = useState<TemperatureData[] | null>(null);
   const api = useContext(ApiContext);
-  const lowTemp = ["15", "16", "13", "10"];
+  const lowTemp = ["15", "6", "16", "12", "13", "17", "10"];
   const sensors = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22, 23,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 20, 21, 22, 23,
   ];
   useEffect(() => {
     const fetchData = async () => {
@@ -46,28 +45,6 @@ export default function QuickTable() {
   filteredData.forEach((item) => {
     sensorDataMap.set(item.sensorID, item);
   });
-
-  function checkOffline(item: TemperatureData) {
-    const hours = Math.abs(
-      differenceInHours(new Date(item.timestamp), new Date()),
-    );
-    const days = Math.abs(
-      differenceInDays(new Date(item.timestamp), new Date()),
-    );
-    return hours > 4 && days < 7;
-  }
-
-  function checkTypeAndTemp(t: TemperatureData, lowTemp: string[]) {
-    if (lowTemp.includes(t.sensorID) && t.temperature > -18) {
-      return false;
-    } else if (lowTemp.includes(t.sensorID) && t.temperature < -18) {
-      return true;
-    } else if (t.temperature > 7) {
-      return false;
-    } else {
-      return true;
-    }
-  }
 
   function getCardColor(
     item: TemperatureData | undefined,

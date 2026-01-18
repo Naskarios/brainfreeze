@@ -3,11 +3,11 @@ import type { TemperatureData } from "../types/fridge";
 
 export function checkOffline(item: TemperatureData) {
   const hours = Math.abs(
-    differenceInHours(new Date(item.timestamp), new Date())
+    differenceInHours(new Date(item.timestamp), new Date()),
   );
   const days = Math.abs(differenceInDays(new Date(item.timestamp), new Date()));
 
-  return hours > 2 && days < 7;
+  return hours > 4 && days < 7;
 }
 
 export function checkTypeAndTemp(t: TemperatureData, lowTemp: string[]) {

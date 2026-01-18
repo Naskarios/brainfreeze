@@ -6,9 +6,9 @@ import TemperatureTableRow from "./TemperatureTableRow";
 function TemperaturesTable() {
   const [data, setData] = useState<TemperatureData[] | null>(null);
   const api = useContext(ApiContext);
-  const lowTemp = ["15", "16", "13", "10"];
+  const lowTemp = ["15", "6", "16", "12", "13", "17", "10"];
   const sensors = [
-    1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 20, 21, 22, 23,
   ];
   useEffect(() => {
     const fetchData = async () => {
