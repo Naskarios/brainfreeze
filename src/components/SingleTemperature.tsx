@@ -26,10 +26,12 @@ export default function SingleTemperature() {
       </label>
       <input
         type="number"
+        min={1}
+        max={23}
         onChange={(e) => {
           setSelectedSensor(e.target.value);
         }}
-        placeholder="Enter Sensor number"
+        placeholder="No."
         className="px-4 py-2 rounded-lg border-2 bg-white border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-colors duration-200"
       />
       {data ? (

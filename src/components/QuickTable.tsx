@@ -49,12 +49,12 @@ export default function QuickTable() {
 
   function checkOffline(item: TemperatureData) {
     const hours = Math.abs(
-      differenceInHours(new Date(item.timestamp), new Date())
+      differenceInHours(new Date(item.timestamp), new Date()),
     );
     const days = Math.abs(
-      differenceInDays(new Date(item.timestamp), new Date())
+      differenceInDays(new Date(item.timestamp), new Date()),
     );
-    return hours > 2 && days < 7;
+    return hours > 4 && days < 7;
   }
 
   function checkTypeAndTemp(t: TemperatureData, lowTemp: string[]) {
@@ -71,7 +71,7 @@ export default function QuickTable() {
 
   function getCardColor(
     item: TemperatureData | undefined,
-    lowTemp: string[]
+    lowTemp: string[],
   ): string {
     if (!item) {
       return "bg-gray-300 border-gray-400";
@@ -87,12 +87,7 @@ export default function QuickTable() {
   return (
     <div className="p-6">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">
-          Temperature Overview
-        </h2>
-        <p className="text-gray-600 text-sm mt-1">
-          {sensors.length} sensors monitored
-        </p>
+        <h2 className="text-2xl font-bold text-white">Temperature Overview</h2>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {sensors.map((sensorID) => {
@@ -102,7 +97,7 @@ export default function QuickTable() {
               key={sensorID}
               className={`flex flex-col items-center justify-center p-4 rounded-xl shadow-lg border-2 transition-transform duration-200 hover:scale-105 cursor-default ${getCardColor(
                 item,
-                lowTemp
+                lowTemp,
               )}`}
             >
               <div className="text-xs font-semibold text-gray-700 uppercase tracking-wide">

@@ -25,12 +25,12 @@ function App() {
       {/* serve -s build */}
       {/* HEADER */}
       <Header></Header>
-      <div className="flex">
+      <div className="flex justify-around flex-wrap">
         <button
           onClick={() => {
             setRender(Render.QUICK);
           }}
-          className="mx-auto my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
+          className=" my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
         >
           Quick Info
         </button>
@@ -38,7 +38,7 @@ function App() {
           onClick={() => {
             setRender(Render.TABLE);
           }}
-          className="mx-auto my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
+          className=" my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
         >
           Main Table
         </button>
@@ -46,7 +46,7 @@ function App() {
           onClick={() => {
             setRender(Render.SINGLE);
           }}
-          className="mx-auto my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
+          className=" my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
         >
           Single Temperature
         </button>
@@ -55,7 +55,7 @@ function App() {
           onClick={() => {
             setRender(Render.HISTORY);
           }}
-          className="mx-auto my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
+          className=" my-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md"
         >
           History
         </button>
