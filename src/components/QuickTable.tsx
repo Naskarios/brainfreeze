@@ -8,7 +8,7 @@ export default function QuickTable() {
   const api = useContext(ApiContext);
   const lowTemp = ["15", "6", "16", "12", "13", "17", "10"];
   const sensors = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 20, 21, 22, 23,
+    1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 21, 22, 23,
   ];
   useEffect(() => {
     const fetchData = async () => {
@@ -82,6 +82,9 @@ export default function QuickTable() {
               </div>
               <div className="text-3xl font-bold text-gray-900 mt-3">
                 {item ? `${item.temperature}°C` : "??"}
+              </div>
+              <div className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                {item?.timestamp}
               </div>
             </div>
           );
